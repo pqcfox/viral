@@ -6,15 +6,11 @@ require 'viral/version'
 Gem::Specification.new do |spec|
   spec.name          = "viral"
   spec.version       = Viral::VERSION
-  spec.authors       = ["TODO: Write your name"]
-  spec.email         = ["TODO: Write your email address"]
+  spec.authors       = ["useanalias"]
+  spec.email         = ["use.an.alias@gmail.com"]
 
-  if spec.respond_to?(:metadata)
-    spec.metadata['allowed_push_host'] = "TODO: Set to 'http://mygemserver.com' to prevent pushes to rubygems.org, or delete to allow pushes to any server."
-  end
-
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
+  spec.summary       = %q{Play "hacker" without the moral implications, social engineering, and jail time.}
+  spec.description   = %q{Create Ruby-based computer viruses to run on Vagrant VM and erradicate them over SSH.}
   spec.homepage      = "TODO: Put your gem's website or public repo URL here."
   spec.license       = "MIT"
 
