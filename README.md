@@ -1,6 +1,6 @@
 # Viral
 
-Viral is a simple game designed for you to have fun making computer viruses without all of the drama. In the real world, hacking leads to tedious social engineering, incarceration, and existential crises. With Viral, you don't have to worry about any of that: just write the code, infect, and see how fast your friends can erradicate your virus. 
+Viral is a simple game designed for you to have fun making computer viruses without all of the drama. In the real world, hacking leads to tedious social engineering, incarceration, and existential crises. With Viral, you don't have to worry about any of that: just write the code, infect a virtual network (powered by Vagrant), and see how fast your friends can erradicate your virus. 
 
 ## Installation
 
@@ -22,31 +22,43 @@ Or install it yourself as:
 
 ## Usage
 
-Viral is primarily intended for command line usage, but if you want to develop programs that use Viral, a Ruby interface is available. Viruses are written in Ruby, and network definitions are written in YAML. 
+Viral is primarily intended for command line usage, but if you want to develop programs that use Viral, a Ruby interface is available. Viruses and Viralfiles are plain Ruby. 
 
 Here is a basic virus:
 
 ```ruby
-Virus.new do
-  puts 'Hello, world!'
+Virus.new do |rules|
+  File.open('rules', 'w') do |f| 
+    f.puts "Here are the rules:"
+    f.puts rules
+  end
 end
 ```
 
-Here is a simple network definition.
+Here is an example Vagrantfile you could use:
 
-```yaml
-nodes:
-  - hostname: ubuntubox 
-    os: Ubuntu
-    connections: [debianbox]
-  - hostname: debianbox
-    os: Debian 
-    connections: [ubuntubox]
+```ruby
+Vagrant.configure("2") do |config|
+  config.vm.define "precise" do |precise|
+    precise.vm.box = "ubuntu/precise64"
+  end
+
+  config.vm.define "trusty" do |trusty|
+    trusty.vm.box = "ubuntu/trusty64"
+  end
+end
 ```
 
-To run this virus in the given network, use `viral virus.rb network.yaml`.
+A basic Viralfile is written as follows:
 
-More information on viruses and network definitions is available in the documentation and in the wiki.
+```ruby
+Viral.configure do |config|
+  config.rules.allow_root = false
+end
+```
+
+To run this virus, use `viral virus.rb` in the same directory as your Vagrantfile and your Virusfile.
+More information on viruses and Rulefiles is available in the documentation and in the wiki.
 
 ## Development
 
