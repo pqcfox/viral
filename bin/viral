@@ -1,0 +1,35 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "optparse"
+require "viral"
+
+options = {}
+parser = OptionParser.new do |opts|
+  opts.banner = "Usage: viral [options] virus_file"
+
+  opts.on("-v", "--[no-]verbose", "Run in verbose mode") do |v|
+    options[:verbose] = v
+  end
+
+  opts.on("-h", "--help", "Display a help message") do
+    puts opts
+    exit
+  end
+end
+
+parser.parse!
+parser.parse "-h" if ARGV.empty?
+
+vagrantfile = File.join(Dir.getwd, "Vagrantfile")
+viralfile = File.join(Dir.getwd, "Viralfile")
+virusfile = File.join(Dir.getwd, ARGV.first)
+
+require viralfile
+require virusfile
+
+rules = Viral::Rules
+virus = Viral::Virus
+network = Viral::Network.new vagrantfile
+
+network.run(virus, rules)
